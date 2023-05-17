@@ -12,11 +12,11 @@ Ini adalah aplikasi e-commerce berbasis web yang dibuat menggunakan React.JS den
 
 ## Instalasi
 Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
-1. CLone Repository
+1. Coone Repository
 `https://github.com/hacktiv8-fp2-team2/FP02-Ecommerce-Team2.git`
 
 2. Install Dependency
 `npm install`
 
-3. Menjalanakan Server
+3. Menjalankan Server
 `npm run dev`
