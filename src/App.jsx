@@ -1,23 +1,9 @@
-// import React from "react";
-
-// const App = () => {
-//   return (
-//     <div className="h-screen w-full flex justify-center items-center bg-gray-800">
-//       <h1 className="text-red-200 text-3xl">Hello World</h1>
-//     </div>
-//   );
-// };
-
-// export default App;
-
 import { BrowserRouter, Route } from "react-router-dom";
-// import NavigationBar from './components/NavigationBar';
 import { Routes } from "react-router-dom";
 import LoginPages from "./pages/LoginPages";
 import HomePages from "./pages/HomePages";
 import Navbar from "./components/organisms/Navbar";
 import Footer from "./components/organisms/Footer";
-
 
 function App() {
   window.onscroll = () => {
@@ -48,4 +34,3 @@ function App() {
 }
 
 export default App;
-
