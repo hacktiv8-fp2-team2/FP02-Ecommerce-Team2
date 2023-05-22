@@ -4,8 +4,15 @@ import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
 import { Logo } from "../../Atoms/Logo";
 import IconLogout from "../../icons/IconLogout";
+import { getAllCarts } from "../../../features/products/productSlice";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const totalQty = useSelector((state) => {
+    const carts = useSelector(getAllCarts);
+    return carts.reduce((total, item) => total + item.qty, 0);
+  });
+
   let activeStyle = {
     color: "#000000",
     fontWeight: "bold",
@@ -22,8 +29,9 @@ const Navbar = () => {
 
   useEffect(() => { }, []);
 
+
   return (
-    <div id="navbar" className="navbar bg-base-100">
+    <div id="navbar" className="navbar bg-base-100 fixed mt-0 top-0">
       <div className="flex-1 ml-11">
         <Logo />
       </div>
