@@ -4,6 +4,7 @@ import LoginPages from "./pages/LoginPages";
 import HomePages from "./pages/HomePages";
 import Navbar from "./components/organisms/Navbar";
 import Footer from "./components/organisms/Footer";
+import { ProductDetail } from "./components/Templates/ProductDetail";
 
 function App() {
   window.onscroll = () => {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<HomePages />} />
           <Route path="/home" element={<HomePages />} />
           <Route path="/login" element={<LoginPages />} />
+          <Route path="/product-detail" element={<ProductDetail />} />
           <Route path="*" element={<h1>Pages not Found</h1>} />
         </Routes>
         <Footer />

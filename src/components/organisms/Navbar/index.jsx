@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
+import { Logo } from "../../Atoms/Logo";
 
 
 const Navbar = () => {
@@ -9,6 +10,7 @@ const Navbar = () => {
     color: "#000000",
     fontWeight: "bold",
     backgroundColor: "#fff",
+    borderRadius: "10%",
   };
 
   // let navigate = useNavigate();
@@ -22,12 +24,10 @@ const Navbar = () => {
 
   return (
     <div id="navbar" className="navbar bg-base-100">
-      <div className="flex-1">
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
-          LIZIDI TIKIPIDI
-        </Link>
+      <div className="flex-1 ml-11">
+        <Logo />
       </div>
-      <div>
+      <div className="mr-12">
         <ul tabIndex={0} className="menu menu-horizontal flex-1">
           <li className="mr-5">
             <NavLink
