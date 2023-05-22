@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate  } from "react-router-dom";
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
 import { Logo } from "../../Atoms/Logo";
+import IconLogout from "../../icons/IconLogout";
 import { getAllCarts } from "../../../features/products/productSlice";
 import { useSelector } from "react-redux";
 
@@ -19,7 +20,15 @@ const Navbar = () => {
     borderRadius: "10%",
   };
 
-  useEffect(() => {}, []);
+  let navigate = useNavigate();
+
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/home");
+  };
+
+  useEffect(() => { }, []);
+
 
   return (
     <div id="navbar" className="navbar bg-base-100 fixed mt-0 top-0">
@@ -38,17 +47,35 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
+          {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
+            <li className="mr-5">
+              <NavLink
+                as={Link}
+                to="/update"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                Update
+              </NavLink>
+            </li>
+          )}
+          {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
+            <li className="mr-5">
+              <NavLink
+                as={Link}
+                to="/rekap"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                Rekap
+              </NavLink>
+            </li>
+          )}
           <li className="mr-5">
             <NavLink
               as={Link}
-              end
               to="/cart"
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
               Cart
-              <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
-                {totalQty}
-              </div>
             </NavLink>
           </li>
         </ul>
