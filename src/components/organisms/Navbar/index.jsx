@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, NavLink, useNavigate  } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
 import { Logo } from "../../Atoms/Logo";
@@ -27,8 +27,7 @@ const Navbar = () => {
     navigate("/home");
   };
 
-  useEffect(() => { }, []);
-
+  useEffect(() => {}, []);
 
   return (
     <div id="navbar" className="navbar bg-base-100 fixed mt-0 top-0">
@@ -76,6 +75,9 @@ const Navbar = () => {
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
               Cart
+              <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
+                {totalQty}
+              </div>
             </NavLink>
           </li>
         </ul>
