@@ -6,6 +6,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Atoms/Button";
 import homepage from "../assets/images/Layer.png";
+import { Link } from "react-router-dom";
 
 const HomePages = () => {
   const dispatch = useDispatch();
@@ -39,32 +40,30 @@ const HomePages = () => {
             primarily the internet.
           </p>
         </div>
-        <img src={homepage} alt="browsing" />
+        <img src={homepage} alt="browsing"/>
       </div>
-      <div className="flex flex-wrap gap-8 pt-20">
+      <div className="flex flex-wrap gap-8 pt-20 mb-16">
         {isLoading ? (
-          <div>Loading...</div> // Render a loading state while fetching data
+          <p className="mx-auto p-10 text-gray-400">Loading...</p> // Render a loading state while fetching data
         ) : (
           products.map((product, index) => (
             <div
               key={index}
-              className="w-[calc(25%_-_2rem)] px-5 pb-5 rounded-lg shadow-[3px_8px_12px_rgba(0,0,0,0.25)] text-center mb-5"
+              className="w-[calc(27%_-_3rem)] px-5 pb-5 rounded-lg shadow-[3px_8px_12px_rgba(0,0,0,0.25)] text-center"
             >
               <img
                 src={product.image}
                 alt="product"
-                className="h-[25rem] mx-auto"
+                className="h-[10rem] mx-auto bg-center bg-cover"
               />
-              <h2 className="font-bold text-xl mt-3">{product.title}</h2>
-              <p className="text-gray-500 text-sm">{product.category}</p>
-              <p className="mt-3">
-                {product.description.length > 75
-                  ? product.description.substring(0, 75) + "..."
-                  : product.description}
+              <h2 className="font-bold text-xl mt-5 line-clamp-2 hyphens-auto h-[3em]">{product.title}</h2>
+              <p className="truncate text-gray-500 text-sm">{product.category}</p>
+              <p className="mt-3 text-justify line-clamp-3">
+                {product.description}
               </p>
-              <div className="space-x-5 mt-5">
-                <Button type={"button"} buttonPrimary>
-                  Detail
+              <div className="space-x-4 mt-7 flex flex-row">
+                <Button type={"submit"} buttonPrimary>
+                  <Link to="/product-detail">Detail</Link>
                 </Button>
                 <Button type={"button"} buttonPrimary>
                   Add to Cart
