@@ -51,7 +51,8 @@ const LoginForm = () => {
           <span className="font-light text-gray-400 mb-8">
             Don’t have a account, Sign up
           </span>
-          <div className="py-4" onSubmit={handleSubmit}>
+          <form className="card-body" onSubmit={handleSubmit}>
+          <div className="py-4">
             <span className="mb-2 text-md">Username</span>
             <input
               value={input.username}
@@ -85,7 +86,9 @@ const LoginForm = () => {
           <Button type={"submit"} buttonPrimary isFullWidth>
             Login
           </Button>
+          </form>
         </div>
+        
         {/* <!-- right side --> */}
         <div className="relative">
           <img

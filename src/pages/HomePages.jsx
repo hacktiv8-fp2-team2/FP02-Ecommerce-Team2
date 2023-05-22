@@ -12,21 +12,24 @@ const HomePages = () => {
   const dispatch = useDispatch();
   const products = useSelector(getAllProducts);
   const [isLoading, setIsLoading] = useState(false);
+  const [Login, setLogin] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLogin(true);
         setIsLoading(true);
         await dispatch(fetchProducts());
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
+        setLogin(false);
         console.log(error);
       }
     };
 
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, Login]);
 
   return (
     <section className="px-14">

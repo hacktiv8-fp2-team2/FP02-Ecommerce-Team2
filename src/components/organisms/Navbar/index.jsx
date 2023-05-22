@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate  } from "react-router-dom";
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
 import { Logo } from "../../Atoms/Logo";
-
+import IconLogout from "../../icons/IconLogout";
 
 const Navbar = () => {
   let activeStyle = {
@@ -13,12 +13,12 @@ const Navbar = () => {
     borderRadius: "10%",
   };
 
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
 
-  // const logOut = () => {
-  //   localStorage.clear();
-  //   navigate("/home");
-  // };
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/home");
+  };
 
   useEffect(() => { }, []);
 
@@ -37,6 +37,37 @@ const Navbar = () => {
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
               Home
+            </NavLink>
+          </li>
+          {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
+            <li className="mr-5">
+              <NavLink
+                as={Link}
+                to="/update"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                Update
+              </NavLink>
+            </li>
+          )}
+          {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
+            <li className="mr-5">
+              <NavLink
+                as={Link}
+                to="/rekap"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                Rekap
+              </NavLink>
+            </li>
+          )}
+          <li className="mr-5">
+            <NavLink
+              as={Link}
+              to="/cart"
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              Cart
             </NavLink>
           </li>
         </ul>
