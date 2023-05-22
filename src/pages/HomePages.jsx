@@ -52,7 +52,7 @@ const HomePages = () => {
           products.map((product, index) => (
             <div
               key={index}
-              className="w-[calc(27%_-_3rem)] px-5 pb-5 rounded-lg shadow-[3px_8px_12px_rgba(0,0,0,0.25)] text-center"
+              className="w-[calc(29%_-_3.5rem)] px-5 pb-5 rounded-lg shadow-[3px_8px_12px_rgba(0,0,0,0.25)] text-center"
             >
               <img
                 src={product.image}
@@ -68,11 +68,11 @@ const HomePages = () => {
               <p className="mt-3 text-justify line-clamp-3">
                 {product.description}
               </p>
-              <div className="space-x-4 mt-7 flex flex-row">
+              <div className="space-x-6 mt-7 flex flex-row">
                 <Button type={"button"} buttonPrimary>
                   <Link to="/product-detail">Detail</Link>
                 </Button>
-                <button onClick={() => addtocart(product)}>Add to Cart</button>
+                <button className="btn badge badge-primary badge-outline" onClick={() => addtocart(product)}>Add to Cart</button>
               </div>
             </div>
           ))
