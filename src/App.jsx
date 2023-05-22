@@ -2,6 +2,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router-dom";
 import LoginPages from "./pages/LoginPages";
 import HomePages from "./pages/HomePages";
+import Cart from "./pages/Cart";
 import Navbar from "./components/organisms/Navbar";
 import Footer from "./components/organisms/Footer";
 import { ProductDetail } from "./components/Templates/ProductDetail";
@@ -27,6 +28,7 @@ function App() {
           <Route path="/home" element={<HomePages />} />
           <Route path="/login" element={<LoginPages />} />
           <Route path="/product-detail" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<h1>Pages not Found</h1>} />
         </Routes>
         <Footer />
