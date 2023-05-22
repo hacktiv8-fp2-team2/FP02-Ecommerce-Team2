@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   fetchProducts,
   getAllProducts,
+  addToCart,
 } from "../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Atoms/Button";
@@ -11,7 +12,9 @@ import { Link } from "react-router-dom";
 const HomePages = () => {
   const dispatch = useDispatch();
   const products = useSelector(getAllProducts);
+
   const [isLoading, setIsLoading] = useState(false);
+  const addtocart = (id) => dispatch(addToCart(id));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,11 +43,11 @@ const HomePages = () => {
             primarily the internet.
           </p>
         </div>
-        <img src={homepage} alt="browsing"/>
+        <img src={homepage} alt="browsing" />
       </div>
-      <div className="flex flex-wrap gap-8 pt-20 mb-16">
+      <div className="flex flex-wrap gap-3 pt-20 mb-16">
         {isLoading ? (
-          <p className="mx-auto p-10 text-gray-400">Loading...</p> // Render a loading state while fetching data
+          <p className="mx-auto p-10 text-gray-400">Loading...</p>
         ) : (
           products.map((product, index) => (
             <div
@@ -56,18 +59,20 @@ const HomePages = () => {
                 alt="product"
                 className="h-[10rem] mx-auto bg-center bg-cover"
               />
-              <h2 className="font-bold text-xl mt-5 line-clamp-2 hyphens-auto h-[3em]">{product.title}</h2>
-              <p className="truncate text-gray-500 text-sm">{product.category}</p>
+              <h2 className="font-bold text-xl mt-5 line-clamp-2 hyphens-auto h-[3em]">
+                {product.title}
+              </h2>
+              <p className="truncate text-gray-500 text-sm">
+                {product.category}
+              </p>
               <p className="mt-3 text-justify line-clamp-3">
                 {product.description}
               </p>
               <div className="space-x-4 mt-7 flex flex-row">
-                <Button type={"submit"} buttonPrimary>
+                <Button type={"button"} buttonPrimary>
                   <Link to="/product-detail">Detail</Link>
                 </Button>
-                <Button type={"button"} buttonPrimary>
-                  Add to Cart
-                </Button>
+                <button onClick={() => addtocart(product)}>Add to Cart</button>
               </div>
             </div>
           ))

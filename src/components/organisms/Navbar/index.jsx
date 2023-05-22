@@ -3,9 +3,15 @@ import { Link, NavLink } from "react-router-dom";
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
 import { Logo } from "../../Atoms/Logo";
-
+import { getAllCarts } from "../../../features/products/productSlice";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const totalQty = useSelector((state) => {
+    const carts = useSelector(getAllCarts);
+    return carts.reduce((total, item) => total + item.qty, 0);
+  });
+
   let activeStyle = {
     color: "#000000",
     fontWeight: "bold",
@@ -13,14 +19,7 @@ const Navbar = () => {
     borderRadius: "10%",
   };
 
-  // let navigate = useNavigate();
-
-  // const logOut = () => {
-  //   localStorage.clear();
-  //   navigate("/home");
-  // };
-
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   return (
     <div id="navbar" className="navbar bg-base-100 fixed mt-0 top-0">
@@ -37,6 +36,19 @@ const Navbar = () => {
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
               Home
+            </NavLink>
+          </li>
+          <li className="mr-5">
+            <NavLink
+              as={Link}
+              end
+              to="/cart"
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              Cart
+              <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
+                {totalQty}
+              </div>
             </NavLink>
           </li>
         </ul>
