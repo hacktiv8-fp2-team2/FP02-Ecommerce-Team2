@@ -23,7 +23,7 @@ const Navbar = () => {
   useEffect(() => { }, []);
 
   return (
-    <div id="navbar" className="navbar bg-base-100">
+    <div id="navbar" className="navbar bg-base-100 fixed mt-0 top-0">
       <div className="flex-1 ml-11">
         <Logo />
       </div>
