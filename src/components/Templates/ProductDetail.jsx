@@ -49,7 +49,7 @@ export const ProductDetail = () => {
                   type="number"
                   min={1}
                   placeholder="1"
-                  className="w-[2.5em] border border-neutral-900 rounded-md p-3"
+                  className="w-[3.5em] text-center border border-neutral-900 rounded-md p-3"
                 />
               </form>
               <Button type={"button"} buttonPrimary>
