@@ -46,7 +46,8 @@ export const ProductDetail = () => {
             <div className="flex flex-row space-x-3">
               <form>
                 <input
-                  type="text"
+                  type="number"
+                  min={1}
                   placeholder="1"
                   className="w-[2.5em] border border-neutral-900 rounded-md p-3"
                 />
