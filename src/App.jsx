@@ -6,6 +6,7 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/organisms/Navbar";
 import Footer from "./components/organisms/Footer";
 import { ProductDetail } from "./components/Templates/ProductDetail";
+import AdminStockPages from "./pages/AdminStockPages";
 
 function App() {
   window.onscroll = () => {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/login" element={<LoginPages />} />
           <Route path="/product-detail" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/admin" element={<AdminStockPages />} />
           <Route path="*" element={<h1>Pages not Found</h1>} />
         </Routes>
         <Footer />
