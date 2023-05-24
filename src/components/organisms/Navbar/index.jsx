@@ -75,7 +75,7 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
-          {!localStorage.getItem("token") && (
+          {localStorage.getItem("token") && (
             <li className="mr-5">
               <NavLink 
                 as={Link}
@@ -83,26 +83,30 @@ const Navbar = () => {
                 onClick={() => window.scrollTo(0, 0)} 
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
                 className="z-20 text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
-                Cart
+                  Cart
                 <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
                   {totalQty}
                 </div>
               </NavLink>
-
             </li>
           )}
           <li className="mr-5">
-          {location === "/" ? (
-            <a href="#contact" className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
-              Contact
-              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
-            </a>
+            {location === "/" ? (
+              <a
+                href="#contact"
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+              >
+                Contact
+                <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
+              </a>
             ) : (
-              <NavLink 
-              as={Link}
-              to="/#contact" onClick={() => window.scrollTo(0, 792)}
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+              <NavLink
+                as={Link}
+                to="/#contact"
+                onClick={() => window.scrollTo(0, 792)}
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+              >
                 Contact
               </NavLink>
             )}
