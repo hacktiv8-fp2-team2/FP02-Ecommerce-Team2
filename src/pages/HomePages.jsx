@@ -35,7 +35,7 @@ const HomePages = () => {
   }, [dispatch, Login]);
 
   return (
-    <section className="px-14 mt-20">
+    <section id="home" className="px-14 mt-20">
       <div className="flex flex-col lg:flex-row justify-between items-center">
         <div className="max-w-md">
           <h1 className="text-4xl pb-2">Welcome To Our </h1>

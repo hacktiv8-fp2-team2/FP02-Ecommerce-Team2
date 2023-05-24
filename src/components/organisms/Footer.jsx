@@ -6,19 +6,25 @@ import discord from "../../assets/images/ci_discord.png";
 import twitter from "../../assets/images/ci_twitter.png";
 
 const Footer = () => {
+    // const topFunction = () => {
+    //     document.body.scrollTop = 0;
+    //     document.documentElement.scrollTop = 0;
+    // };
     return (
-        <footer className="footer footer-center pt-7 pb-3 bg-primary text-white">
-            <div>
-                <h1 className="font-bold text-xl">React me out</h1>
-                <div className="flex flex-rows space-x-4 mt-5 mb-7">
-                    <Link to="https://www.instagram.com/" target="_blank"><img src={instagram}></img></Link>
-                    <Link to="https://github.com/hacktiv8-fp2-team2/FP02-Ecommerce-Team2" target="_blank"><img src={github}></img></Link>
-                    <Link to="https://discord.com/channels/1074976329658802206/1074976329658802211" target="_blank"><img src={discord}></img></Link>
-                    <Link to="https://twitter.com/" target="_blank"><img src={twitter}></img></Link>
+        <section id="contact">
+            <footer className="footer footer-center pt-7 pb-3 bg-primary text-white">
+                <div>
+                    <h1 className="font-bold text-xl">React me out</h1>
+                    <div className="flex flex-rows space-x-4 mt-5 mb-7">
+                        <Link to="https://www.instagram.com/" target="_blank"><img src={instagram}></img></Link>
+                        <Link to="https://github.com/hacktiv8-fp2-team2/FP02-Ecommerce-Team2" target="_blank"><img src={github}></img></Link>
+                        <Link to="https://discord.com/channels/1074976329658802206/1074976329658802211" target="_blank"><img src={discord}></img></Link>
+                        <Link to="https://twitter.com/" target="_blank"><img src={twitter}></img></Link>
+                    </div>
+                    <p className="font-extralight tracking-wider">&copy; Kelompok 2 FP02 2023 &bull; Got any feedback?</p>
                 </div>
-                <p className="font-extralight tracking-wider">&copy; Kelompok 2 FP02 2023 &bull; Got any feedback?</p>
-            </div>
-        </footer>
+            </footer>
+        </section>
     )
 }
 

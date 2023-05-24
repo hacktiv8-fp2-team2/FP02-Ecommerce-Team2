@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
 import { Logo } from "../../Atoms/Logo";
@@ -8,6 +8,7 @@ import { getAllCarts } from "../../../features/products/productSlice";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const location = useLocation().pathname;
   const totalQty = useSelector((state) => {
     const carts = useSelector(getAllCarts);
     return carts.reduce((total, item) => total + item.qty, 0);
@@ -37,20 +38,26 @@ const Navbar = () => {
       <div className="mr-12">
         <ul tabIndex={0} className="menu menu-horizontal flex-1">
           <li className="mr-5">
-            <NavLink
-              as={Link}
-              end
-              to="/"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-            >
+          {location === "/" ? (
+            <a href="#home" className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
               Home
-            </NavLink>
+              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
+            </a>
+            ) : (
+              <NavLink 
+                as={Link}  
+                to="/" onClick={() => window.scrollTo(0, 0)} 
+                style={({ isActive }) => (isActive ? activeStyle : undefined)} 
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+                Home
+              </NavLink>
+            )}
           </li>
           {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
             <li className="mr-5">
               <NavLink
                 as={Link}
-                to="/update"
+                to="/admin"
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
               >
                 Update
@@ -61,24 +68,44 @@ const Navbar = () => {
             <li className="mr-5">
               <NavLink
                 as={Link}
-                to="/rekap"
+                to="/admin/sales-recap"
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
               >
                 Rekap
               </NavLink>
             </li>
           )}
+          {!localStorage.getItem("token") && (
+            <li className="mr-5">
+              <NavLink 
+                as={Link}
+                to="/cart" 
+                onClick={() => window.scrollTo(0, 0)} 
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                className="z-20 text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+                Cart
+                <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
+                  {totalQty}
+                </div>
+              </NavLink>
+
+            </li>
+          )}
           <li className="mr-5">
-            <NavLink
+          {location === "/" ? (
+            <a href="#contact" className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+              Contact
+              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
+            </a>
+            ) : (
+              <NavLink 
               as={Link}
-              to="/cart"
+              to="/#contact" onClick={() => window.scrollTo(0, 792)}
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
-            >
-              Cart
-              <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
-                {totalQty}
-              </div>
-            </NavLink>
+              className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+                Contact
+              </NavLink>
+            )}
           </li>
         </ul>
         <ul className="flex-none">
