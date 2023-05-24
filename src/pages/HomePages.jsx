@@ -13,32 +13,41 @@ const HomePages = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector(getAllProducts);
+  let navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [Login, setLogin] = useState(false);
   const addtocart = (id) => {
-    if (!localStorage.getItem("token")) {
-      return navigate("/login");
+    if (Login) {
+      dispatch(addToCart(id));
+    } else {
+      navigate("/login");
     }
-    dispatch(addToCart(id));
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        setLogin(true);
-        setIsLoading(true);
-        await dispatch(fetchProducts());
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        setLogin(false);
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch, Login]);
+    try {
+      setLogin(true);
+      setIsLoading(true);
+      await dispatch(fetchProducts());
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setLogin(false);
+      console.log(error);
+    }
+    if (localStorage.getItem("token")) {
+      setLogin(true);
+      setIsLoading(true);
+      setIsLoading(false);
+    } else {
+      setLogin(false);
+      setIsLoading(false);
+    }
+  }
+  fetchData();
+  }, [Login, dispatch]);
 
   return (
     <section id="home" className="px-14 mt-20">
