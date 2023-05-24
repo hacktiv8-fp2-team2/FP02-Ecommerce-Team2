@@ -5,17 +5,23 @@ import {
   addToCart,
 } from "../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Atoms/Button";
 import homepage from "../assets/images/Layer.png";
-import { Link } from "react-router-dom";
 
 const HomePages = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector(getAllProducts);
 
   const [isLoading, setIsLoading] = useState(false);
   const [Login, setLogin] = useState(false);
-  const addtocart = (id) => dispatch(addToCart(id));
+  const addtocart = (id) => {
+    if (!localStorage.getItem("token")) {
+      return navigate("/login");
+    }
+    dispatch(addToCart(id));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +41,7 @@ const HomePages = () => {
   }, [dispatch, Login]);
 
   return (
-    <section className="px-14 mt-20">
+    <section id="home" className="px-14 mt-20">
       <div className="flex flex-col lg:flex-row justify-between items-center">
         <div className="max-w-md">
           <h1 className="text-4xl pb-2">Welcome To Our </h1>
@@ -68,6 +74,9 @@ const HomePages = () => {
               <p className="truncate text-gray-500 text-sm">
                 {product.category}
               </p>
+              <p className="truncate text-gray-500 text-sm">
+                stock {product.qty}
+              </p>
               <p className="mt-3 text-justify line-clamp-3">
                 {product.description}
               </p>
@@ -75,7 +84,12 @@ const HomePages = () => {
                 <Button type={"button"} buttonPrimary>
                   <Link to="/product-detail">Detail</Link>
                 </Button>
-                <button className="btn badge badge-primary badge-outline" onClick={() => addtocart(product)}>Add to Cart</button>
+                <button
+                  className="btn badge badge-primary badge-outline"
+                  onClick={() => addtocart(product)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))

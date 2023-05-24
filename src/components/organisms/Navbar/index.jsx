@@ -38,20 +38,31 @@ const Navbar = () => {
       <div className="mr-12">
         <ul tabIndex={0} className="menu menu-horizontal flex-1">
           <li className="mr-5">
-            <NavLink
-              as={Link}
-              end
-              to="/"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-            >
-              Home
-            </NavLink>
+            {location === "/" ? (
+              <a
+                href="#home"
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+              >
+                Home
+                <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
+              </a>
+            ) : (
+              <NavLink
+                as={Link}
+                to="/"
+                onClick={() => window.scrollTo(0, 0)}
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+              >
+                Home
+              </NavLink>
+            )}
           </li>
           {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
             <li className="mr-5">
               <NavLink
                 as={Link}
-                to="/update"
+                to="/admin"
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
               >
                 Update
@@ -62,7 +73,7 @@ const Navbar = () => {
             <li className="mr-5">
               <NavLink
                 as={Link}
-                to="/rekap"
+                to="/admin/sales-recap"
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
               >
                 Rekap
