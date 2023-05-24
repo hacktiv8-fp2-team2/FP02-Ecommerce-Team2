@@ -68,6 +68,9 @@ const HomePages = () => {
               <p className="truncate text-gray-500 text-sm">
                 {product.category}
               </p>
+              <p className="truncate text-gray-500 text-sm">
+                stock {product.qty}
+              </p>
               <p className="mt-3 text-justify line-clamp-3">
                 {product.description}
               </p>
@@ -75,7 +78,12 @@ const HomePages = () => {
                 <Button type={"button"} buttonPrimary>
                   <Link to="/product-detail">Detail</Link>
                 </Button>
-                <button className="btn badge badge-primary badge-outline" onClick={() => addtocart(product)}>Add to Cart</button>
+                <button
+                  className="btn badge badge-primary badge-outline"
+                  onClick={() => addtocart(product)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))
