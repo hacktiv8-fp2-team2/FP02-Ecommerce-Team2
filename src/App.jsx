@@ -7,7 +7,6 @@ import HomePages from "./pages/HomePages";
 import LoginPages from "./pages/LoginPages";
 import Navbar from "./components/organisms/Navbar";
 import Footer from "./components/organisms/Navbar/Footer";
-import { ProductDetail } from "./components/Templates/ProductDetail";
 import AdminStockPages from "./pages/AdminStockPages";
 
 function App() {
