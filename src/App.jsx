@@ -1,13 +1,14 @@
-import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router-dom";
-import LoginPages from "./pages/LoginPages";
-import HomePages from "./pages/HomePages";
+import { BrowserRouter, Route } from "react-router-dom";
+import { ProductDetail } from "./components/Templates/ProductDetail";
 import Cart from "./pages/Cart";
+import Recap from "./pages/Recap";
+import HomePages from "./pages/HomePages";
+import LoginPages from "./pages/LoginPages";
 import Navbar from "./components/organisms/Navbar";
 import Footer from "./components/organisms/Navbar/Footer";
 import { ProductDetail } from "./components/Templates/ProductDetail";
 import AdminStockPages from "./pages/AdminStockPages";
-import Recap from "./pages/Recap";
 
 function App() {
   window.onscroll = () => {
@@ -29,7 +30,7 @@ function App() {
           <Route path="/" element={<HomePages />} />
           <Route path="/home" element={<HomePages />} />
           <Route path="/login" element={<LoginPages />} />
-          <Route path="/product-detail" element={<ProductDetail />} />
+          <Route path="/product-detail/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/admin" element={<AdminStockPages />} />
           <Route path="/admin/sales-recap" element={<Recap />} />

@@ -83,9 +83,11 @@ const HomePages = () => {
                 {product.description}
               </p>
               <div className="space-x-6 mt-7 flex flex-row">
-                <Button type={"button"} buttonPrimary>
-                  <Link to="/product-detail">Detail</Link>
-                </Button>
+                <Link to={`/product-detail/${product.id}`}>
+                  <Button type={"button"} buttonPrimary>
+                    Detail
+                  </Button>
+                </Link>
                 <button
                   className="btn badge badge-primary badge-outline"
                   onClick={() => addtocart(product)}
