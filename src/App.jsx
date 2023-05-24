@@ -33,6 +33,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/admin" element={<AdminStockPages />} />
           <Route path="/admin/sales-recap" element={<Recap />} />
+          <Route path="/contact" element={<Footer />} />
           <Route path="*" element={<h1>Pages not Found</h1>} />
         </Routes>
         <Footer />
