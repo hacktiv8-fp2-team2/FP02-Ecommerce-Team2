@@ -7,6 +7,7 @@ import Navbar from "./components/organisms/Navbar";
 import Footer from "./components/organisms/Footer";
 import { ProductDetail } from "./components/Templates/ProductDetail";
 import AdminStockPages from "./pages/AdminStockPages";
+import Recap from "./pages/Recap";
 
 function App() {
   window.onscroll = () => {
@@ -31,6 +32,8 @@ function App() {
           <Route path="/product-detail" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/admin" element={<AdminStockPages />} />
+          <Route path="/admin/sales-recap" element={<Recap />} />
+          <Route path="/contact" element={<Footer />} />
           <Route path="*" element={<h1>Pages not Found</h1>} />
         </Routes>
         <Footer />

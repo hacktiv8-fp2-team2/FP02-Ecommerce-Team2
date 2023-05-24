@@ -38,20 +38,26 @@ const Navbar = () => {
       <div className="mr-12">
         <ul tabIndex={0} className="menu menu-horizontal flex-1">
           <li className="mr-5">
-            <NavLink
-              as={Link}
-              end
-              to="/"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-            >
+          {location === "/" ? (
+            <a href="#home" className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
               Home
-            </NavLink>
+              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
+            </a>
+            ) : (
+              <NavLink 
+                as={Link}  
+                to="/" onClick={() => window.scrollTo(0, 0)} 
+                style={({ isActive }) => (isActive ? activeStyle : undefined)} 
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+                Home
+              </NavLink>
+            )}
           </li>
           {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
             <li className="mr-5">
               <NavLink
                 as={Link}
-                to="/update"
+                to="/admin"
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
               >
                 Update
@@ -62,7 +68,7 @@ const Navbar = () => {
             <li className="mr-5">
               <NavLink
                 as={Link}
-                to="/rekap"
+                to="/admin/sales-recap"
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
               >
                 Rekap
@@ -71,12 +77,13 @@ const Navbar = () => {
           )}
           {localStorage.getItem("token") && (
             <li className="mr-5">
-              <NavLink
+              <NavLink 
                 as={Link}
-                to="/cart"
+                to="/cart" 
+                onClick={() => window.scrollTo(0, 0)} 
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                Cart
+                className="z-20 text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+                  Cart
                 <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
                   {totalQty}
                 </div>
