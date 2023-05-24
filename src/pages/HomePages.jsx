@@ -7,32 +7,46 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Atoms/Button";
 import homepage from "../assets/images/Layer.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 const HomePages = () => {
   const dispatch = useDispatch();
   const products = useSelector(getAllProducts);
+  let navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [Login, setLogin] = useState(false);
-  const addtocart = (id) => dispatch(addToCart(id));
+  const addtocart = (id) => {
+    if (Login) {
+      dispatch(addToCart(id));
+    } else {
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        setLogin(true);
-        setIsLoading(true);
-        await dispatch(fetchProducts());
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        setLogin(false);
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch, Login]);
+    try {
+      setLogin(true);
+      setIsLoading(true);
+      await dispatch(fetchProducts());
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setLogin(false);
+      console.log(error);
+    }
+    if (localStorage.getItem("token")) {
+      setLogin(true);
+      setIsLoading(true);
+      setIsLoading(false);
+    } else {
+      setLogin(false);
+      setIsLoading(false);
+    }
+  }
+  fetchData();
+  }, [Login, dispatch]);
 
   return (
     <section id="home" className="px-14 mt-20">
