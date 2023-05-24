@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
 import { Logo } from "../../Atoms/Logo";
@@ -8,6 +8,7 @@ import { getAllCarts } from "../../../features/products/productSlice";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const location = useLocation().pathname;
   const totalQty = useSelector((state) => {
     const carts = useSelector(getAllCarts);
     return carts.reduce((total, item) => total + item.qty, 0);
@@ -68,17 +69,40 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
+          {localStorage.getItem("token") && (
+            <li className="mr-5">
+              <NavLink
+                as={Link}
+                to="/cart"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                Cart
+                <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
+                  {totalQty}
+                </div>
+              </NavLink>
+            </li>
+          )}
           <li className="mr-5">
-            <NavLink
-              as={Link}
-              to="/cart"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-            >
-              Cart
-              <div className="absolute top-1 right-1 text-xs rounded-full bg-red-500 text-white px-1">
-                {totalQty}
-              </div>
-            </NavLink>
+            {location === "/" ? (
+              <a
+                href="#contact"
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+              >
+                Contact
+                <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
+              </a>
+            ) : (
+              <NavLink
+                as={Link}
+                to="/#contact"
+                onClick={() => window.scrollTo(0, 792)}
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+              >
+                Contact
+              </NavLink>
+            )}
           </li>
         </ul>
         <ul className="flex-none">
