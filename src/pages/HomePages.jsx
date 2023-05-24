@@ -5,17 +5,23 @@ import {
   addToCart,
 } from "../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Atoms/Button";
 import homepage from "../assets/images/Layer.png";
-import { Link } from "react-router-dom";
 
 const HomePages = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector(getAllProducts);
 
   const [isLoading, setIsLoading] = useState(false);
   const [Login, setLogin] = useState(false);
-  const addtocart = (id) => dispatch(addToCart(id));
+  const addtocart = (id) => {
+    if (!localStorage.getItem("token")) {
+      return navigate("/login");
+    }
+    dispatch(addToCart(id));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
