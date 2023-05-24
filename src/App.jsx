@@ -4,7 +4,7 @@ import LoginPages from "./pages/LoginPages";
 import HomePages from "./pages/HomePages";
 import Cart from "./pages/Cart";
 import Navbar from "./components/organisms/Navbar";
-import Footer from "./components/organisms/Footer";
+import Footer from "./components/organisms/Navbar/Footer";
 import { ProductDetail } from "./components/Templates/ProductDetail";
 import AdminStockPages from "./pages/AdminStockPages";
 import Recap from "./pages/Recap";

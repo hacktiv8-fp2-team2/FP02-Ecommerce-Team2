@@ -5,12 +5,13 @@ import {
   addToCart,
 } from "../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Atoms/Button";
 import homepage from "../assets/images/Layer.png";
-import { Link, useNavigate} from "react-router-dom";
 
 const HomePages = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector(getAllProducts);
   let navigate = useNavigate();
 
