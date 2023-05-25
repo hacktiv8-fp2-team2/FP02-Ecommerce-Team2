@@ -16,6 +16,7 @@ const LoginForm = () => {
     let name = event.target.name;
     setInput({ ...input, [name]: value });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     let { username, password } = input;

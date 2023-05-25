@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import instagram from "../../assets/images/ci_instagram.png";
-import github from "../../assets/images/ci_github.png";
-import discord from "../../assets/images/ci_discord.png";
-import twitter from "../../assets/images/ci_twitter.png";
+import instagram from "../../../assets/images/ci_instagram.png";
+import github from "../../../assets/images/ci_github.png";
+import discord from "../../../assets/images/ci_discord.png";
+import twitter from "../../../assets/images/ci_twitter.png";
 
 const Footer = () => {
   return (
