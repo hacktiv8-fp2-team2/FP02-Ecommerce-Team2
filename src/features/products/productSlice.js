@@ -8,6 +8,9 @@ const initialState = {
   carts: localStorage.getItem("carts")
     ? JSON.parse(localStorage.getItem("carts"))
     : [],
+  sells: localStorage.getItem("sells")
+    ? JSON.parse(localStorage.getItem("sells"))
+    : [],
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -29,12 +32,16 @@ export const productsSlice = createSlice({
         (item) => item.id === newItem.id
       );
 
+      const product = state.products.find((prod) => prod.id === newItem.id);
+      if (product.qty === 0) {
+        alert("Stock melebihi batas");
+        return;
+      }
+
       if (existingItemIndex !== -1) {
         const existingItem = existingItems[existingItemIndex];
-        const product = state.products.find((prod) => prod.id === newItem.id);
 
         if (existingItem.qty + 1 > product.qty) {
-          // Tampilkan pesan stock melebihi batas
           alert("Stock melebihi batas");
           return;
         }
@@ -46,6 +53,30 @@ export const productsSlice = createSlice({
 
       state.carts = existingItems;
       localStorage.setItem("carts", JSON.stringify(existingItems));
+    },
+    addSells: (state, action) => {
+      const newPesanan = action.payload;
+      const existingPesanan = state.sells;
+
+      newPesanan.forEach((item) => {
+        const existingItemIndex = existingPesanan.findIndex(
+          (existingItem) => existingItem.id === item.id
+        );
+
+        if (existingItemIndex !== -1) {
+          const existingItem = existingPesanan[existingItemIndex];
+          const mergedItem = {
+            ...existingItem,
+            qty: existingItem.qty + item.qty,
+          };
+          existingPesanan[existingItemIndex] = mergedItem;
+        } else {
+          existingPesanan.push(item);
+        }
+      });
+
+      state.sells = existingPesanan;
+      localStorage.setItem("sells", JSON.stringify(existingPesanan));
     },
     deleteItem: (state, action) => {
       const itemId = action.payload;
@@ -70,6 +101,16 @@ export const productsSlice = createSlice({
         localStorage.setItem("carts", JSON.stringify(state.carts));
       }
     },
+    deleteAllItems: (state) => {
+      state.carts = [];
+      localStorage.removeItem("carts");
+    },
+    updateProductQty: (state, action) => {
+      const { productId, newQty } = action.payload;
+      state.products = state.products.map((product) =>
+        product.id === productId ? { ...product, qty: newQty } : product
+      );
+    },
   },
   extraReducers: {
     [fetchProducts.pending]: () => console.log("pending"),
@@ -79,7 +120,15 @@ export const productsSlice = createSlice({
         ...product,
         qty: 20,
       }));
-      return { ...state, products: productsWithQty };
+      const updatedProductsWithQty = productsWithQty.map((product) => {
+        const checkoutItem = state.sells.find((item) => item.id === product.id);
+        const qty = checkoutItem ? checkoutItem.qty : 0;
+        return {
+          ...product,
+          qty: product.qty - qty,
+        };
+      });
+      return { ...state, products: updatedProductsWithQty };
     },
     [fetchProducts.rejected]: () => console.log("pending"),
   },
@@ -92,9 +141,13 @@ export const {
   decrementItem,
   getCart,
   updateCart,
+  addSells,
+  deleteAllItems,
+  updateProductQty,
 } = productsSlice.actions;
 
 export const getAllProducts = (state) => state.products.products;
 export const getAllCarts = (state) => state.products.carts;
+export const getAllSells = (state) => state.products.sells;
 
 export default productsSlice.reducer;

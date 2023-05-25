@@ -59,9 +59,8 @@ const LoginForm = () => {
                   onChange={handleInput}
                   type={"text"}
                   name="username"
-                  className="input input-bordered"
+                  className="input input-bordered w-full"
                   placeholder="Username"
-                  style={{ width: "100%" }}
                 />
               </div>
               <div className="py-4">
@@ -71,9 +70,8 @@ const LoginForm = () => {
                   onChange={handleInput}
                   type={"password"}
                   name="password"
-                  className="input input-bordered"
+                  className="input input-bordered w-full"
                   placeholder="Password"
-                  style={{ width: "100%" }}
                 />
               </div>
               <div className="flex justify-between w-full py-4">

@@ -24,11 +24,9 @@ const Navbar = () => {
   let navigate = useNavigate();
 
   const logOut = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate("/home");
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div id="navbar" className="navbar bg-base-100 fixed mt-0 top-0">
