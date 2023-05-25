@@ -1,16 +1,37 @@
+import { useState } from "react";
 import { BackButton } from "../Atoms/BackButton";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getAllProducts } from "../../features/products/productSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  getAllProducts,
+  addToCart,
+} from "../../features/products/productSlice";
 import Button from "../Atoms/Button";
-import stars from "../../assets/images/stars.png";
 import bus from "../../assets/images/bus.png";
 import vector from "../../assets/images/Vector.png";
 
 export const ProductDetail = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector(getAllProducts);
   const product = products.find((p) => p.id === Number(id));
+
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    if (!localStorage.getItem("token")) {
+      return navigate("/login");
+    }
+    const item = {
+      ...product,
+      qty: quantity,
+    };
+
+    for (let i = 0; i < quantity; i++) {
+      dispatch(addToCart(item));
+    }
+  };
 
   return (
     <section className="container flex-1 ml-14 mt-24 mb-11">
@@ -43,10 +64,12 @@ export const ProductDetail = () => {
                   type="number"
                   min={1}
                   placeholder="1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
                   className="w-[4em] text-center border border-neutral-900 rounded-md p-3"
                 />
               </form>
-              <Button type={"button"} buttonPrimary>
+              <Button buttonPrimary handleClick={handleAddToCart}>
                 Add to Cart
               </Button>
             </div>
