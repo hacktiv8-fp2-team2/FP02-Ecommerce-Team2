@@ -60,7 +60,7 @@ const LoginForm = () => {
                   type={"text"}
                   name="username"
                   className="input input-bordered"
-                  placeholder="Email address"
+                  placeholder="Username"
                   style={{ width: "100%" }}
                 />
               </div>
