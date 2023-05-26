@@ -6,7 +6,7 @@ import googlePay from "../assets/images/googlepay.png";
 import amazon from "../assets/images/amazon.png";
 import affirm from "../assets/images/affirm.png";
 import shopeePay from "../assets/images/shopeepay.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrementItem,
@@ -14,10 +14,13 @@ import {
   incrementItem,
   getAllCarts,
   getAllProducts,
+  addSells,
+  deleteAllItems,
 } from "../features/products/productSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const carts = useSelector(getAllCarts);
 
   const products = useSelector(getAllProducts);
@@ -45,6 +48,13 @@ const Cart = () => {
   const handleDecrement = (id) => {
     dispatch(decrementItem(id));
     setIsStockAvailable(true);
+  };
+
+  const handleCheckout = () => {
+    dispatch(addSells(carts));
+    dispatch(deleteAllItems());
+
+    navigate("/home");
   };
 
   return (
@@ -117,7 +127,12 @@ const Cart = () => {
               <p>Total Harga</p>
               <p className="font-bold">$ {totalHarga.toFixed(2)}</p>
             </div>
-            <Button type={"button"} buttonPrimary isFullWidth>
+            <Button
+              type={"button"}
+              buttonPrimary
+              isFullWidth
+              handleClick={handleCheckout}
+            >
               Checkout
             </Button>
             <div className="flex flex-row justify-center mt-2">

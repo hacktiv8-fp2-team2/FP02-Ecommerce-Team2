@@ -24,16 +24,16 @@ const Navbar = () => {
   let navigate = useNavigate();
 
   const logOut = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate("/home");
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div id="navbar" className="navbar bg-base-100 fixed mt-0 top-0">
       <div className="flex-1 ml-11">
-        <Logo />
+        <NavLink as={Link} to={"/"}>
+          <Logo />
+        </NavLink>
       </div>
       <div className="mr-12">
         <ul tabIndex={0} className="menu menu-horizontal flex-1">
