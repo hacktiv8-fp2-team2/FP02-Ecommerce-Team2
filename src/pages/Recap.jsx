@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { getAllSells } from "../features/products/productSlice";
 import { useSelector } from "react-redux";
+import { BackButton } from "../components/Atoms/BackButton";
 
 const Recap = () => {
   const sells = useSelector(getAllSells);
@@ -17,11 +18,7 @@ const Recap = () => {
 
   return (
     <section className="mt-24 ml-14 mb-11">
-      <div className="max-w-[35px] max-h-[50px] p-1 rounded-full shadow-[3px_8px_12px_rgba(0,0,0,0.25)] text-center mb-11">
-        <Link to="/admin">
-          <i className="fa-solid fa-arrow-left fa-beat"></i>
-        </Link>
-      </div>
+      <BackButton />
       {sells.length > 0 ? (
         <>
           <div className="flex flex-wrap gap-2">
@@ -30,7 +27,7 @@ const Recap = () => {
                 <img
                   src={sell.image}
                   alt="Product Detail Picture"
-                  className="w-[16em] h-[13em] shadow-[3px_8px_12px_rgba(0,0,0,0.25)]"
+                  className="w-[15em] h-[13em] shadow-[3px_8px_12px_rgba(0,0,0,0.25)]"
                 ></img>
                 <div className="flex flex-col ml-10 mr-10 mb-10">
                   <h1 className="font-bold text-3xl truncate w-[8.5em] mt-4">
