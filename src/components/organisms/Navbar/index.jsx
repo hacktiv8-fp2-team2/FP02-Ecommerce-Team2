@@ -1,17 +1,22 @@
-import React, { useEffect } from "react";
-import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
+import React from "react";
+import { Logo } from "../../Atoms/Logo";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllCarts } from "../../../features/products/productSlice";
+import { clearLogin } from "../../../features/auth/authSlice";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+
 import Button from "../../Atoms/Button";
 import IconLogin from "../../icons/IconLogin";
-import { Logo } from "../../Atoms/Logo";
 import IconLogout from "../../icons/IconLogout";
-import { getAllCarts } from "../../../features/products/productSlice";
-import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const location = useLocation().pathname;
-  const {totalQty} = useSelector((state) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const login = useSelector((state) => state.auth.login);
+
+  const totalQty = useSelector((state) => {
     const carts = useSelector(getAllCarts);
-    return carts.reduce((total, item) => total + item.qty, 0) ;
+    return carts.reduce((total, item) => total + item.qty, 0);
   });
 
   let activeStyle = {
@@ -21,10 +26,9 @@ const Navbar = () => {
     borderRadius: "10%",
   };
 
-  let navigate = useNavigate();
-
   const logOut = () => {
-    localStorage.removeItem("token");
+    dispatch(clearLogin());
+    localStorage.removeItem("login");
     navigate("/home");
   };
 
@@ -37,16 +41,8 @@ const Navbar = () => {
       </div>
       <div className="mr-12">
         <ul tabIndex={0} className="menu menu-horizontal flex-1">
-          <li className="mr-5">
-            {location === "/" ? (
-              <a
-                href="#home"
-                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
-              >
-                Home
-                <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
-              </a>
-            ) : (
+          {login.role !== "isAdmin" && (
+            <li className="mr-5">
               <NavLink
                 as={Link}
                 to="/"
@@ -56,44 +52,35 @@ const Navbar = () => {
               >
                 Home
               </NavLink>
-            )}
-          </li>
-          {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
-          <li className="mr-5">
-            <a
-              className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
-            >
-              Update
-              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
-            </a>
-              <NavLink
-                as={Link}
-                to="/admin"
-                onClick={() => window.scrollTo(0, 0)}
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
-              >
-                Update
-              </NavLink>
             </li>
-            )}
-            {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
-            <li>
-              <a href="#sales-recap" className="text-base py-2 mx-6 font-quicksand font-semibold capitalize group-hover:text-secondary">
-                Sales Recap
-                <span className="block h-0.5 w-full transition-all duration-500  bg-secondary"></span>
-              </a>
-              <NavLink 
-                as={Link}
-                to="/admin/sales-recap"
-                onClick={() => window.scrollTo(0, 0)}
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
-                Sales Recap
-              </NavLink>
-          </li>
           )}
-          {localStorage.getItem("token") && (
+          {login.role === "isAdmin" && (
+            <>
+              <li className="mr-5">
+                <NavLink
+                  as={Link}
+                  to="/admin"
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+                >
+                  Update
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  as={Link}
+                  to="/admin/sales-recap"
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+                >
+                  Sales Recap
+                </NavLink>
+              </li>
+            </>
+          )}
+          {login.role === "user" && (
             <li className="mr-5">
               <NavLink
                 as={Link}
@@ -107,16 +94,8 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
-          <li className="mr-5">
-            {location === "/" ? (
-              <a
-                href="#contact"
-                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
-              >
-                Contact
-                <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
-              </a>
-            ) : (
+          {login.role !== "isAdmin" && (
+            <li className="mr-5">
               <NavLink
                 as={Link}
                 to="/#contact"
@@ -126,11 +105,20 @@ const Navbar = () => {
               >
                 Contact
               </NavLink>
-            )}
-          </li>
+            </li>
+          )}
         </ul>
         <ul className="flex-none">
-          {!localStorage.getItem("token") && (
+          {login.login ? (
+            <li onClick={() => logOut()}>
+              <Button buttonDanger>
+                <div className="flex text-xs">
+                  <IconLogout />
+                  <p className="m-auto mx-2 text-xs">Logout</p>
+                </div>
+              </Button>
+            </li>
+          ) : (
             <li>
               <Link to="/login">
                 <Button buttonPrimary>
@@ -140,16 +128,6 @@ const Navbar = () => {
                   </div>
                 </Button>
               </Link>
-            </li>
-          )}
-          {localStorage.getItem("token") && (
-            <li onClick={() => logOut()}>
-              <Button buttonDanger>
-                <div className="flex text-xs">
-                  <IconLogout />
-                  <p className="m-auto mx-2 text-xs">Logout</p>
-                </div>
-              </Button>
             </li>
           )}
         </ul>

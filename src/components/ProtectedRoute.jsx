@@ -1,13 +1,13 @@
-import {useLocation, Navigate} from 'react-router-dom'
+import { useLocation, Navigate } from "react-router-dom";
 
 export default function ProtectedRoute({ children }) {
-    let location = useLocation();
+  let location = useLocation();
 
-    if(!localStorage.getItem("token")){
-        return <Navigate to="/" state={{ from: location }} />
-    }
+  if (!localStorage.getItem("login")) {
+    return <Navigate to="/" state={{ from: location }} />;
+  }
 
-    return children;
+  return children;
 }
 // import { useSelector } from "react-redux";
 // import { Navigate, Outlet } from "react-router-dom";

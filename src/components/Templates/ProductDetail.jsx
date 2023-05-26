@@ -20,7 +20,7 @@ export const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
-    if (!localStorage.getItem("token")) {
+    if (!localStorage.getItem("login")) {
       return navigate("/login");
     }
     const item = {

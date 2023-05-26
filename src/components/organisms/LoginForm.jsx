@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../Atoms/Button";
 import loginpage from "../../assets/images/ilustration.png";
-// import { loginUser } from "../features/products/productSlice";
-import { loginUser } from "../../features/products/productSlice";
+import { loginUser } from "../../features/auth/authSlice";
 
 const LoginForm = () => {
   const { isLoading } = useSelector(getAllProducts);
@@ -82,8 +81,14 @@ const LoginForm = () => {
                     style={{ width: "100%" }}
                   />
                 </div>
-                <div className="w-full py-4 text-red-500 italic capitalize tracking-wide text-base">{empty && <p>Please fill in the login form first</p>}</div>
-                <div className="w-full py-4 text-red-500 italic capitalize tracking-wide text-base">{error && <p>The username or password you entered is incorrect</p>}</div>
+                <div className="w-full py-4 text-red-500 italic capitalize tracking-wide text-base">
+                  {empty && <p>Please fill in the login form first</p>}
+                </div>
+                <div className="w-full py-4 text-red-500 italic capitalize tracking-wide text-base">
+                  {error && (
+                    <p>The username or password you entered is incorrect</p>
+                  )}
+                </div>
                 <div className="flex justify-between w-full py-4">
                   <div className="mr-24">
                     <input type="checkbox" name="ch" id="ch" className="mr-2" />

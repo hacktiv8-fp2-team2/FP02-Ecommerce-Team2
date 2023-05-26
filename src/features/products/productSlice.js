@@ -13,7 +13,7 @@ const initialState = {
     : [],
   updateQtyProduct: localStorage.getItem("updateQtyProduct")
     ? JSON.parse(localStorage.getItem("updateQtyProduct"))
-    : [], // Tambahkan state baru di sini
+    : [],
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -23,33 +23,6 @@ export const fetchProducts = createAsyncThunk(
     return response.data;
   }
 );
-
-export const loginUser = createAsyncThunk("products/loginUser", async ({ username, password, redirect, isLogin, notFound }) => {
-  try {
-    if (isLogin) {
-      return isLogin;
-    }
-    if (username === "admin" && password === "admin") {
-      redirect({ role: "isAdmin" });
-      return { id: 99, role: "isAdmin", user: username, login: true };
-
-    }
-    const resPost = await axios.post("https://fakestoreapi.com/auth/login", {
-      username: username !== "" ? username : " ",
-      password: password !== "" ? password : " ",
-    });
-    const resGet = await axios.get("https://fakestoreapi.com/users");
-    let find = resGet.data.find((res) => res.username === username);
-
-    if (resPost.data.token) {
-      redirect({ role: "user" });
-      return { id: find.id, role: "user", user: `${find.name.firstname} ${find.name.lastname}`, token: resPost.data.token, login: true };
-    }
-  } catch (error) {
-    notFound(true);
-    throw error;
-  }
-});
 
 export const productsSlice = createSlice({
   name: "products",
@@ -138,7 +111,6 @@ export const productsSlice = createSlice({
     updateProductQty: (state, action) => {
       const { productId, newQty } = action.payload;
 
-      // Retrieve the existing updateQtyProduct from state
       const existingUpdateQtyProduct = state.updateQtyProduct;
 
       const productToUpdate = existingUpdateQtyProduct.find(
@@ -146,23 +118,18 @@ export const productsSlice = createSlice({
       );
 
       if (productToUpdate) {
-        // If the product exists, update its qty value
         productToUpdate.newQty = newQty;
       } else {
-        // If the product doesn't exist, add it as a new entry
         existingUpdateQtyProduct.push({ productId, newQty });
       }
 
-      // Update the state with the modified updateQtyProduct
       state.updateQtyProduct = existingUpdateQtyProduct;
 
-      // Save the updateQtyProduct to localStorage
       localStorage.setItem(
         "updateQtyProduct",
         JSON.stringify(existingUpdateQtyProduct)
       );
 
-      // Update the qty value of the product in the products array
       state.products = state.products.map((product) =>
         product.id === productId ? { ...product, qty: newQty } : product
       );
@@ -172,10 +139,8 @@ export const productsSlice = createSlice({
     [fetchProducts.pending]: () => console.log("pending"),
     [fetchProducts.fulfilled]: (state, { payload }) => {
       console.log("fetch successfully");
-      // Retrieve the updateQtyProduct from state
       const updateQtyProduct = state.updateQtyProduct;
 
-      // Map the products with the updated quantity
       const productsWithQty = payload.map((product) => {
         const matchingProduct = updateQtyProduct.find(
           (p) => p.productId === product.id
@@ -184,7 +149,6 @@ export const productsSlice = createSlice({
         return { ...product, qty };
       });
 
-      // Update the products with the quantity values
       const updatedProductsWithQty = productsWithQty.map((product) => {
         const checkoutItem = state.sells.find((item) => item.id === product.id);
         const qty = checkoutItem ? checkoutItem.qty : 0;
@@ -197,18 +161,6 @@ export const productsSlice = createSlice({
       return { ...state, products: updatedProductsWithQty };
     },
     [fetchProducts.rejected]: () => console.log("pending"),
-    [loginUser.pending]: (state, action) => {
-      state.isLoading = true;
-      state.login = [];
-    },
-    [loginUser.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.login = action.payload;
-      localStorage.setItem("login", JSON.stringify(action.payload));
-    },
-    [loginUser.rejected]: (state, action) => {
-      state.isLoading = false;
-    },
   },
 });
 

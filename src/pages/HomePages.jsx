@@ -9,18 +9,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Atoms/Button";
 import homepage from "../assets/images/Layer.png";
 
-
 const HomePages = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector(getAllProducts);
 
-
   const [isLoading, setIsLoading] = useState(false);
   const [Login, setLogin] = useState(false);
   const addtocart = (id) => {
     if (JSON.parse(!localStorage.getItem("login"))) {
-      navigate("/login");
+      return navigate("/login");
     }
     dispatch(addToCart(id));
   };

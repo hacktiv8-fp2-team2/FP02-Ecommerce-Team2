@@ -39,9 +39,9 @@ const Cart = () => {
 
     if (cartItem.qty < productItem.qty) {
       dispatch(incrementItem(id));
-      setIsStockAvailable(true); // Mengatur ketersediaan stok menjadi true
+      setIsStockAvailable(true);
     } else {
-      setIsStockAvailable(false); // Mengatur ketersediaan stok menjadi false
+      setIsStockAvailable(false);
     }
   };
 
