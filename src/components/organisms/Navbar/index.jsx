@@ -9,9 +9,9 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const location = useLocation().pathname;
-  const totalQty = useSelector((state) => {
+  const {totalQty} = useSelector((state) => {
     const carts = useSelector(getAllCarts);
-    return carts.reduce((total, item) => total + item.qty, 0);
+    return carts.reduce((total, item) => total + item.qty, 0) ;
   });
 
   let activeStyle = {
@@ -59,26 +59,39 @@ const Navbar = () => {
             )}
           </li>
           {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
-            <li className="mr-5">
+          <li className="mr-5">
+            <a
+              className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
+            >
+              Update
+              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-500  bg-secondary"></span>
+            </a>
               <NavLink
                 as={Link}
                 to="/admin"
+                onClick={() => window.scrollTo(0, 0)}
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
               >
                 Update
               </NavLink>
             </li>
-          )}
-          {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
-            <li className="mr-5">
-              <NavLink
+            )}
+            {localStorage.getItem("token") && localStorage.getItem("isAdmin") && (
+            <li>
+              <a href="#sales-recap" className="text-base py-2 mx-6 font-quicksand font-semibold capitalize group-hover:text-secondary">
+                Sales Recap
+                <span className="block h-0.5 w-full transition-all duration-500  bg-secondary"></span>
+              </a>
+              <NavLink 
                 as={Link}
                 to="/admin/sales-recap"
+                onClick={() => window.scrollTo(0, 0)}
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                Rekap
+                className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary">
+                Sales Recap
               </NavLink>
-            </li>
+          </li>
           )}
           {localStorage.getItem("token") && (
             <li className="mr-5">

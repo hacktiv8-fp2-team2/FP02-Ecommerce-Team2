@@ -1,45 +1,50 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import { getAllProducts } from "../../features/products/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../Atoms/Button";
 import loginpage from "../../assets/images/ilustration.png";
+// import { loginUser } from "../features/products/productSlice";
+import { loginUser } from "../../features/products/productSlice";
 
 const LoginForm = () => {
-  let navigate = useNavigate();
-  const [input, setInput] = useState({
-    username: "",
-    password: "",
-  });
+  const { isLoading } = useSelector(getAllProducts);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [empty, setEmpty] = useState(false);
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleInput = (event) => {
-    let value = event.target.value;
-    let name = event.target.name;
-    setInput({ ...input, [name]: value });
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (username === "" || password === "") {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setError(false);
+      dispatch(loginUser({ username, password, redirect, notFound }));
+    }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    let { username, password } = input;
-    if ((username === "admin") & (password === "admin")) {
-      let token = 12345;
-      localStorage.setItem("token", token);
-      localStorage.setItem("isAdmin", true);
-
-      navigate("/home");
+  const redirect = (status) => {
+    if (status.role === "admin") {
+      navigate("/admin");
     } else {
-      axios
-        .post(`https://fakestoreapi.com/auth/login`, { username, password })
-        .then((res) => {
-          let { token } = res.data;
-
-          localStorage.setItem("token", token);
-
-          navigate("/home");
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+      navigate("/");
     }
+  };
+
+  const notFound = (status) => {
+    setError(true);
+    navigate("/login");
   };
   return (
     <section id="login">
@@ -51,40 +56,47 @@ const LoginForm = () => {
             <span className="font-light text-gray-400 mb-8">
               Don’t have a account, Sign up
             </span>
-            <form className="card-body" onSubmit={handleSubmit}>
-              <div className="py-4">
-                <span className="mb-2 text-md">Username</span>
-                <input
-                  value={input.username}
-                  onChange={handleInput}
-                  type={"text"}
-                  name="username"
-                  className="input input-bordered w-full"
-                  placeholder="Username"
-                />
-              </div>
-              <div className="py-4">
-                <span className="mb-2 text-md">Password</span>
-                <input
-                  value={input.password}
-                  onChange={handleInput}
-                  type={"password"}
-                  name="password"
-                  className="input input-bordered w-full"
-                  placeholder="Password"
-                />
-              </div>
-              <div className="flex justify-between w-full py-4">
-                <div className="mr-24">
-                  <input type="checkbox" name="ch" id="ch" className="mr-2" />
-                  <span className="text-md">Remember me</span>
+            <form className="card-body" onSubmit={handleLogin}>
+              <div className="py-14">
+                <div className="py-4">
+                  <span className="mb-2 text-md">Username</span>
+                  <input
+                    value={username}
+                    onChange={handleUsername}
+                    type={"text"}
+                    name="username"
+                    className="input input-bordered"
+                    placeholder="mor_2314"
+                    style={{ width: "100%" }}
+                  />
                 </div>
-                <span
-                  className="font-bold text-md "
-                  style={{ color: "#3D85C6" }}
-                >
-                  Forgot password
-                </span>
+                <div className="py-4">
+                  <span className="mb-2 text-md">Password</span>
+                  <input
+                    value={password}
+                    onChange={handlePassword}
+                    type={"password"}
+                    name="password"
+                    className="input input-bordered"
+                    placeholder="83r5^_"
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <div className="w-full py-4 text-red-500 italic capitalize tracking-wide text-base">{empty && <p>Please fill in the login form first</p>}</div>
+                <div className="w-full py-4 text-red-500 italic capitalize tracking-wide text-base">{error && <p>The username or password you entered is incorrect</p>}</div>
+                <div className="flex justify-between w-full py-4">
+                  <div className="mr-24">
+                    <input type="checkbox" name="ch" id="ch" className="mr-2" />
+                    <span className="text-md">Remember me</span>
+                  </div>
+                  <span
+                    className="font-bold text-md "
+                    style={{ color: "#3D85C6" }}
+                  >
+                    Forgot password
+                  </span>
+                </div>
+                {isLoading && <h1>loading...</h1>}
               </div>
               <Button type={"submit"} buttonPrimary isFullWidth>
                 Login

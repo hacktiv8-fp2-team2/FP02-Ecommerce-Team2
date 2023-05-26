@@ -24,6 +24,33 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+export const loginUser = createAsyncThunk("products/loginUser", async ({ username, password, redirect, isLogin, notFound }) => {
+  try {
+    if (isLogin) {
+      return isLogin;
+    }
+    if (username === "admin" && password === "admin") {
+      redirect({ role: "isAdmin" });
+      return { id: 99, role: "isAdmin", user: username, login: true };
+
+    }
+    const resPost = await axios.post("https://fakestoreapi.com/auth/login", {
+      username: username !== "" ? username : " ",
+      password: password !== "" ? password : " ",
+    });
+    const resGet = await axios.get("https://fakestoreapi.com/users");
+    let find = resGet.data.find((res) => res.username === username);
+
+    if (resPost.data.token) {
+      redirect({ role: "user" });
+      return { id: find.id, role: "user", user: `${find.name.firstname} ${find.name.lastname}`, token: resPost.data.token, login: true };
+    }
+  } catch (error) {
+    notFound(true);
+    throw error;
+  }
+});
+
 export const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -170,6 +197,18 @@ export const productsSlice = createSlice({
       return { ...state, products: updatedProductsWithQty };
     },
     [fetchProducts.rejected]: () => console.log("pending"),
+    [loginUser.pending]: (state, action) => {
+      state.isLoading = true;
+      state.login = [];
+    },
+    [loginUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.login = action.payload;
+      localStorage.setItem("login", JSON.stringify(action.payload));
+    },
+    [loginUser.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
   },
 });
 

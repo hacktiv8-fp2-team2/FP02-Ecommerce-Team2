@@ -19,8 +19,8 @@ const HomePages = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [Login, setLogin] = useState(false);
   const addtocart = (id) => {
-    if (!localStorage.getItem("token")) {
-      return navigate("/login");
+    if (JSON.parse(!localStorage.getItem("login"))) {
+      navigate("/login");
     }
     dispatch(addToCart(id));
   };
