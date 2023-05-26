@@ -8,7 +8,7 @@ export const loginUser = createAsyncThunk(
       if (isLogin) {
         return isLogin;
       }
-      if (username === "admin" && password === "admin") {
+      if (username === "admin@bukapedia.com" && password === "admin123") {
         redirect({ role: "isAdmin" });
         return { id: 99, role: "isAdmin", user: username, login: true };
       }

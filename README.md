@@ -1,7 +1,15 @@
 # FP02-Ecommerce-Team2
 
 ## Deskripsi
-Ini adalah aplikasi e-commerce berbasis web yang dibuat menggunakan React.JS dengan beberapa tambahan library/framework seperti tailwindcss, redux-toolkit, react-router dan fakestore API. Project ini dibuat untuk memenuhi tugas final project kedua dari kelompok 2
+Ini adalah aplikasi e-commerce berbasis web yang dibuat menggunakan React.JS dengan beberapa tambahan library/framework seperti tailwindcss, redux-toolkit, react-router dan fakestore API.
+
+## Login Admin
+- username : admin
+- password : admin
+
+## Login User
+- username : mor_2314
+- password : 83r5^_
 
 ## Fitur
 - Daftar produk: Menampilkan daftar produk beserta detailnya, seperti nama, harga, dan gambar.
@@ -12,11 +20,11 @@ Ini adalah aplikasi e-commerce berbasis web yang dibuat menggunakan React.JS den
 
 ## Instalasi
 Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
-1. Coone Repository
+1. Clone Repository
 `https://github.com/hacktiv8-fp2-team2/FP02-Ecommerce-Team2.git`
 
-2. Install Dependency
+1. Install Dependency
 `npm install`
 
-3. Menjalankan Server
+1. Menjalankan Server
 `npm run dev`
