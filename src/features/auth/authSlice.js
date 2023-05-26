@@ -16,6 +16,7 @@ export const loginUser = createAsyncThunk(
         username: username !== "" ? username : " ",
         password: password !== "" ? password : " ",
       });
+
       const resGet = await axios.get("https://fakestoreapi.com/users");
       let find = resGet.data.find((res) => res.username === username);
 

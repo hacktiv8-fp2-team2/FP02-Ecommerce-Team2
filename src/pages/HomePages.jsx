@@ -61,7 +61,7 @@ const HomePages = () => {
           products.map((product, index) => (
             <div
               key={index}
-              className="w-[calc(29%_-_3.5rem)] px-5 pb-5 rounded-lg shadow-[3px_8px_12px_rgba(0,0,0,0.25)] text-center"
+              className="w-[calc(27%_-_3.5rem)] px-5 pb-5 rounded-lg shadow-[3px_8px_12px_rgba(0,0,0,0.25)] text-center mb-10"
             >
               <img
                 src={product.image}

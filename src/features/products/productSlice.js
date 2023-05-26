@@ -31,6 +31,7 @@ export const productsSlice = createSlice({
     addToCart: (state, action) => {
       const existingItems = state.carts.slice();
       const newItem = { ...action.payload, qty: 1 };
+
       const existingItemIndex = existingItems.findIndex(
         (item) => item.id === newItem.id
       );
@@ -58,28 +59,28 @@ export const productsSlice = createSlice({
       localStorage.setItem("carts", JSON.stringify(existingItems));
     },
     addSells: (state, action) => {
-      const newPesanan = action.payload;
-      const existingPesanan = state.sells;
+      const newCheckout = action.payload;
+      const existingCheckout = state.sells;
 
-      newPesanan.forEach((item) => {
-        const existingItemIndex = existingPesanan.findIndex(
+      newCheckout.forEach((item) => {
+        const existingItemIndex = existingCheckout.findIndex(
           (existingItem) => existingItem.id === item.id
         );
 
         if (existingItemIndex !== -1) {
-          const existingItem = existingPesanan[existingItemIndex];
+          const existingItem = existingCheckout[existingItemIndex];
           const mergedItem = {
             ...existingItem,
             qty: existingItem.qty + item.qty,
           };
-          existingPesanan[existingItemIndex] = mergedItem;
+          existingCheckout[existingItemIndex] = mergedItem;
         } else {
-          existingPesanan.push(item);
+          existingCheckout.push(item);
         }
       });
 
-      state.sells = existingPesanan;
-      localStorage.setItem("sells", JSON.stringify(existingPesanan));
+      state.sells = existingCheckout;
+      localStorage.setItem("sells", JSON.stringify(existingCheckout));
     },
     deleteItem: (state, action) => {
       const itemId = action.payload;

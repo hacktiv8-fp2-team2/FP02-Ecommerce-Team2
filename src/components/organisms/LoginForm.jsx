@@ -34,7 +34,7 @@ const LoginForm = () => {
   };
 
   const redirect = (status) => {
-    if (status.role === "admin") {
+    if (status.role === "isAdmin") {
       navigate("/admin");
     } else {
       navigate("/");
