@@ -55,7 +55,7 @@ const Recap = () => {
             <div className="flex flex-row justify-around text-md tracking-widest mb-3">
               <p>Total income</p>
               <p>&#8739;</p>
-              <p className="font-bold">$ {calculateTotalIncome()}</p>
+              <p className="font-bold">$ {calculateTotalIncome().toFixed(2)}</p>
             </div>
           </div>
         </>

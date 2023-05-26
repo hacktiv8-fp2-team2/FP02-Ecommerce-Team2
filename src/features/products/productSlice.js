@@ -111,7 +111,6 @@ export const productsSlice = createSlice({
     },
     updateProductQty: (state, action) => {
       const { productId, newQty } = action.payload;
-
       const existingUpdateQtyProduct = state.updateQtyProduct;
 
       const productToUpdate = existingUpdateQtyProduct.find(
