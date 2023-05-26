@@ -11,6 +11,9 @@ const initialState = {
   sells: localStorage.getItem("sells")
     ? JSON.parse(localStorage.getItem("sells"))
     : [],
+  updateQtyProduct: localStorage.getItem("updateQtyProduct")
+    ? JSON.parse(localStorage.getItem("updateQtyProduct"))
+    : [], // Tambahkan state baru di sini
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -107,6 +110,32 @@ export const productsSlice = createSlice({
     },
     updateProductQty: (state, action) => {
       const { productId, newQty } = action.payload;
+
+      // Retrieve the existing updateQtyProduct from state
+      const existingUpdateQtyProduct = state.updateQtyProduct;
+
+      const productToUpdate = existingUpdateQtyProduct.find(
+        (product) => product.productId === productId
+      );
+
+      if (productToUpdate) {
+        // If the product exists, update its qty value
+        productToUpdate.newQty = newQty;
+      } else {
+        // If the product doesn't exist, add it as a new entry
+        existingUpdateQtyProduct.push({ productId, newQty });
+      }
+
+      // Update the state with the modified updateQtyProduct
+      state.updateQtyProduct = existingUpdateQtyProduct;
+
+      // Save the updateQtyProduct to localStorage
+      localStorage.setItem(
+        "updateQtyProduct",
+        JSON.stringify(existingUpdateQtyProduct)
+      );
+
+      // Update the qty value of the product in the products array
       state.products = state.products.map((product) =>
         product.id === productId ? { ...product, qty: newQty } : product
       );
@@ -116,10 +145,19 @@ export const productsSlice = createSlice({
     [fetchProducts.pending]: () => console.log("pending"),
     [fetchProducts.fulfilled]: (state, { payload }) => {
       console.log("fetch successfully");
-      const productsWithQty = payload.map((product) => ({
-        ...product,
-        qty: 20,
-      }));
+      // Retrieve the updateQtyProduct from state
+      const updateQtyProduct = state.updateQtyProduct;
+
+      // Map the products with the updated quantity
+      const productsWithQty = payload.map((product) => {
+        const matchingProduct = updateQtyProduct.find(
+          (p) => p.productId === product.id
+        );
+        const qty = matchingProduct ? matchingProduct.newQty : 20;
+        return { ...product, qty };
+      });
+
+      // Update the products with the quantity values
       const updatedProductsWithQty = productsWithQty.map((product) => {
         const checkoutItem = state.sells.find((item) => item.id === product.id);
         const qty = checkoutItem ? checkoutItem.qty : 0;
@@ -128,6 +166,7 @@ export const productsSlice = createSlice({
           qty: product.qty - qty,
         };
       });
+
       return { ...state, products: updatedProductsWithQty };
     },
     [fetchProducts.rejected]: () => console.log("pending"),

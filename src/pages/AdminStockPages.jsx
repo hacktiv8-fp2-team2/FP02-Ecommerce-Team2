@@ -4,6 +4,7 @@ import {
   updateProductQty,
 } from "../features/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Button from "../components/Atoms/Button";
 import admin from "../assets/images/admin.png";
 
 const AdminStockPages = () => {
@@ -75,9 +76,9 @@ const AdminProductCard = ({ product, handleUpdateStock }) => {
           onChange={(e) => setUpdatedQty(parseInt(e.target.value))}
         />
       </form>
-      <button type="button" onClick={handleOnClickUpdate}>
+      <Button type="button" buttonPrimary handleClick={handleOnClickUpdate}>
         UPDATE
-      </button>
+      </Button>
     </div>
   );
 };
