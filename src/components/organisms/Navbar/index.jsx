@@ -99,7 +99,7 @@ const Navbar = () => {
               <NavLink
                 as={Link}
                 to="/#contact"
-                onClick={() => window.scrollTo(0, 792)}
+                onClick={() => window.scrollTo(0, 3000)}
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
                 className="text-base py-2 mx-6 font-quicksand font-semibold group-hover:text-secondary"
               >
